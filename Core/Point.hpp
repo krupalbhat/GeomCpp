@@ -1,6 +1,6 @@
 #pragma once
 #include "Point_traits.hpp"
-
+#include <iterator>
 namespace GeomCPP
 {
 
@@ -10,9 +10,11 @@ namespace GeomCPP
     {
         using point = Point<T, Dim>;
 
-    public:
         std::vector<T> coordinates;
 
+    public:
+        auto begin() { return coordinates.begin(); }
+        auto end() { return coordinates.end(); }
         Point(std::vector<T> init) : coordinates(init)
         {
             // std::cout << "Initializer list size: " << init.size() << std::endl;
@@ -41,7 +43,15 @@ namespace GeomCPP
         {
             return point_traits<T, Dim>::dot(coordinates, other.coordinates);
         }
-
+        constexpr bool operator==(const point &other) const
+        {
+            for (size_t i = 0; i < Dim; ++i)
+            {
+                if (std::abs(coordinates[i] - other.coordinates[i]) > 1e-9)
+                    return false;
+            }
+            return true;
+        }
         T distance(const point &other) const
         {
             return point_traits<T, Dim>::distance(coordinates, other.coordinates);
