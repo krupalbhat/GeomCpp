@@ -9,12 +9,18 @@ namespace GeomCPP
     class Point
     {
         using point = Point<T, Dim>;
+        using iterator = typename std::vector<T>::iterator;
+        using const_iterator = typename std::vector<T>::const_iterator;
 
         std::vector<T> coordinates;
 
     public:
-        auto begin() { return coordinates.begin(); }
-        auto end() { return coordinates.end(); }
+        iterator end() { return coordinates.end(); }
+        iterator begin() { return coordinates.begin(); }
+        const_iterator begin() const { return coordinates.begin(); }
+        const_iterator end() const { return coordinates.end(); }
+        const_iterator cbegin() const { return coordinates.cbegin(); }
+        const_iterator cend() const { return coordinates.cend(); }
         Point(std::vector<T> init) : coordinates(init)
         {
             // std::cout << "Initializer list size: " << init.size() << std::endl;
@@ -72,7 +78,7 @@ namespace GeomCPP
         template <valid_scalar ScalarType>
         void scale(ScalarType scalar)
         {
-            for (auto& _point : coordinates)
+            for (auto &_point : coordinates)
             {
                 _point = _point * scalar;
             }
