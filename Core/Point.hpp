@@ -69,9 +69,11 @@ namespace GeomCPP
             }
             return false;
         }
-        void scale(size_t scalar)
+        template <valid_scalar ScalarType>
+        void scale(ScalarType scalar)
         {
-            for(auto& _point : coordinates){
+            for (auto& _point : coordinates)
+            {
                 _point = _point * scalar;
             }
         }

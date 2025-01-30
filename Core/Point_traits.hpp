@@ -12,7 +12,9 @@ namespace GeomCPP
 
     template <typename T>
     concept point_numeric = std::is_arithmetic_v<T>;
-
+    template <typename T>
+    concept valid_scalar = std::is_same_v<T, int> || std::is_same_v<T, float> || std::is_same_v<T, double>;
+    
     template <typename T, size_t Dim>
     struct point_traits
     {
