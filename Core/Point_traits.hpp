@@ -18,13 +18,12 @@ namespace GeomCPP
     {
         static void add(std::vector<T> &result, const std::vector<T> &p1, const std::vector<T> &p2)
         {
-            result.resize(Dim);
+            // result.resize(Dim);
             for (size_t i = 0; i < Dim; ++i)
             {
                 result[i] = p1[i] + p2[i];
             }
         }
-
         static T dot(const std::vector<T> &p1, const std::vector<T> &p2)
         {
             T result = 0;
@@ -44,7 +43,6 @@ namespace GeomCPP
             }
             return std::sqrt(dist);
         }
-       
     };
 
 }

@@ -69,6 +69,13 @@ namespace GeomCPP
             }
             return false;
         }
+        void scale(size_t scalar)
+        {
+            for(auto& _point : coordinates){
+                _point = _point * scalar;
+            }
+        }
+
         void print() const
         {
             std::cout << "(";
