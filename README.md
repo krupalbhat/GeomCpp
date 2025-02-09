@@ -17,7 +17,7 @@ GeomCpp is a lightweight C++ library focused on providing fundamental geometric 
 ## Usage
 ```cpp
 #include <iostream>
-#include "./Core/Point.hpp"
+#include "./GeomCpp/Core/Point.hpp"
 
 using namespace GeomCPP;
 
@@ -27,29 +27,29 @@ int main()
     Point<double, 3> p1 = {{1.1, 2.2, 3.3}};
     Point<double, 3> p2 = {{4.0, 5.0, 6.0}};
 
-    // Add two points
     Point<double, 3> p3 = p1 + p2;
-    p3.print(); // Output: (5.0, 7.0, 9.0)
+    std::cout << "Sum: ";
+    p3.print(); 
 
-    // Dot product
     double dot_result = p1.dot(p2);
-    std::cout << "Dot product: " << dot_result << "\n"; // Output: 32.0
+    std::cout << "Dot product: " << dot_result << "\n"; 
 
-    // Distance between two points
     double dist = p1.distance(p2);
-    std::cout << "Distance: " << dist << "\n"; // Output: 5.19615
+    std::cout << "Distance: " << dist << "\n"; 
+
+    std::cout << "Scaling p1 by 3.4: \n";
+    p1.scale(3.4);
+    p1.print(); 
 
     using Point_2D = Point<double, 2>;
-    std::cout << Point_2D::collinear({1, 1}, {2, 2}, {3, 3}) << "\n";
 
-    std::cout << "Multiplying by scalar 3: \n";
-    p1.scale(3.4);
-    p1.print();
-
-    GeomCPP::Point<double, 3> point({1.0, 2.0, 3.0});
+    std::cout << "Collinear test: "
+              << Point_2D::collinear(Point_2D({1, 1}), Point_2D({2, 2}), Point_2D({3, 3}))
+              << "\n"; // Expected output: 1 (true)
 
     // Iterate over coordinates using range-based for loop
-    for (const auto &coord : point)
+    std::cout << "Coordinates of p2: ";
+    for (const auto &coord : p2)
     {
         std::cout << coord << " ";
     }
@@ -57,5 +57,4 @@ int main()
 
     return 0;
 }
-
 ```

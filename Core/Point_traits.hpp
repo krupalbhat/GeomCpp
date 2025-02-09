@@ -9,42 +9,15 @@
 
 namespace GeomCPP
 {
-
     template <typename T>
     concept point_numeric = std::is_arithmetic_v<T>;
     template <typename T>
     concept valid_scalar = std::is_same_v<T, int> || std::is_same_v<T, float> || std::is_same_v<T, double>;
-    
-    template <typename T, size_t Dim>
-    struct point_traits
-    {
-        static void add(std::vector<T> &result, const std::vector<T> &p1, const std::vector<T> &p2)
-        {
-            // result.resize(Dim);
-            for (size_t i = 0; i < Dim; ++i)
-            {
-                result[i] = p1[i] + p2[i];
-            }
-        }
-        static T dot(const std::vector<T> &p1, const std::vector<T> &p2)
-        {
-            T result = 0;
-            for (size_t i = 0; i < Dim; ++i)
-            {
-                result += p1[i] * p2[i];
-            }
-            return result;
-        }
 
-        static T distance(const std::vector<T> &p1, const std::vector<T> &p2)
-        {
-            T dist = 0;
-            for (size_t i = 0; i < Dim; ++i)
-            {
-                dist += (p1[i] - p2[i]) * (p1[i] - p2[i]);
-            }
-            return std::sqrt(dist);
-        }
-    };
-
+    template <typename P1, typename P2, typename P3>
+    concept same_length_points =
+        requires {
+            requires P1::get_dimensions() == P2::get_dimensions(); // Check dimensions of P1 and P2
+            requires P2::get_dimensions() == P3::get_dimensions(); // Check dimensions of P2 and P3
+        };
 }

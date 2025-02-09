@@ -1,6 +1,10 @@
 #pragma once
-#include "Point_traits.hpp"
-#include <iterator>
+#include <array>
+#include <iostream>
+#include <cmath>
+#include <stdexcept>
+#include <concepts>
+#include "./Point_traits.hpp"
 namespace GeomCPP
 {
 
@@ -8,48 +12,51 @@ namespace GeomCPP
         requires point_numeric<T>
     class Point
     {
+    public:
         using point = Point<T, Dim>;
-        using iterator = typename std::vector<T>::iterator;
-        using const_iterator = typename std::vector<T>::const_iterator;
+        using iterator = typename std::array<T, Dim>::iterator;
+        using const_iterator = typename std::array<T, Dim>::const_iterator;
 
-        std::vector<T> coordinates;
+    private:
+        std::array<T, Dim> coordinates;
+        size_t dimensions;
 
     public:
-        iterator end() { return coordinates.end(); }
         iterator begin() { return coordinates.begin(); }
+        iterator end() { return coordinates.end(); }
         const_iterator begin() const { return coordinates.begin(); }
         const_iterator end() const { return coordinates.end(); }
         const_iterator cbegin() const { return coordinates.cbegin(); }
         const_iterator cend() const { return coordinates.cend(); }
-        Point(std::vector<T> init) : coordinates(init)
-        {
-            // std::cout << "Initializer list size: " << init.size() << std::endl;
-            // std::cout << "Vector size: " << coordinates.size() << std::endl;
-            if (coordinates.size() != Dim)
-            {
-                throw std::invalid_argument("Incorrect number of coordinates.");
-            }
-        }
+        [[nodiscard]] inline static constexpr size_t get_dimensions() { return Dim; };
+        Point(std::array<T, Dim> init) : coordinates(init), dimensions(init.size()) {}
 
         point operator+(const point &other) const
         {
-            point result(std::vector<T>(Dim, T{}));
-
-            point_traits<T, Dim>::add(result.coordinates, coordinates, other.coordinates);
+            point result = *this;
+            for (size_t i = 0; i < Dim; ++i)
+                result.coordinates[i] += other.coordinates[i];
             return result;
         }
-
-        point operator=(const point &other) const
+        T operator[](size_t index) const
         {
-            point result({});
-            result.coordinates = other.coordinates;
-            return result;
+            return coordinates.at(index); // Use .at() for bounds checking
         }
+        point &operator=(const point &other)
+        {
+            coordinates = other.coordinates;
+            return *this;
+        }
+
         T dot(const point &other) const
         {
-            return point_traits<T, Dim>::dot(coordinates, other.coordinates);
+            T result = 0;
+            for (size_t i = 0; i < Dim; ++i)
+                result += coordinates[i] * other.coordinates[i];
+            return result;
         }
-        constexpr bool operator==(const point &other) const
+
+        bool operator==(const point &other) const
         {
             for (size_t i = 0; i < Dim; ++i)
             {
@@ -58,30 +65,20 @@ namespace GeomCPP
             }
             return true;
         }
+
         T distance(const point &other) const
         {
-            return point_traits<T, Dim>::distance(coordinates, other.coordinates);
+            T dist = 0;
+            for (size_t i = 0; i < Dim; ++i)
+                dist += (coordinates[i] - other.coordinates[i]) * (coordinates[i] - other.coordinates[i]);
+            return std::sqrt(dist);
         }
-        static bool collinear(const std::vector<T> &p1, const std::vector<T> &p2, const std::vector<T> &p3)
-        {
-            if (p1.size() != p2.size() || p2.size() != p3.size())
-            {
-                throw std::invalid_argument("All points must have the same dimension.");
-            }
-            if (p1.size() == 2)
-            {
-                T determinant = (p2[0] - p1[0]) * (p3[1] - p1[1]) - (p2[1] - p1[1]) * (p3[0] - p1[0]);
-                return std::abs(determinant) < 1e-9;
-            }
-            return false;
-        }
+
         template <valid_scalar ScalarType>
         void scale(ScalarType scalar)
         {
-            for (auto &_point : coordinates)
-            {
-                _point = _point * scalar;
-            }
+            for (auto &coord : coordinates)
+                coord *= scalar;
         }
 
         void print() const
@@ -95,5 +92,15 @@ namespace GeomCPP
             }
             std::cout << ")\n";
         }
+
+        template <typename P1, typename P2, typename P3>
+            requires same_length_points<P1, P2, P3>
+        static bool collinear(const P1 &p1, const P2 &p2, const P3 &p3)
+        {
+            auto determinant = (p2[0] - p1[0]) * (p3[1] - p1[1]) -
+                               (p2[1] - p1[1]) * (p3[0] - p1[0]);
+            return std::abs(determinant) < 1e-9;
+        }
     };
-}
+
+} // namespace GeomCPP
