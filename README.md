@@ -18,43 +18,53 @@ GeomCpp is a lightweight C++ library focused on providing fundamental geometric 
 ```cpp
 #include <iostream>
 #include "./GeomCpp/Core/Point.hpp"
+#include "./GeomCpp/Visualizer/Visualizer.hpp"
 
-using namespace GeomCPP;
+namespace gp = GeomCPP;
 
 int main()
 {
-    // Create 3D points
-    Point<double, 3> p1 = {{1.1, 2.2, 3.3}};
-    Point<double, 3> p2 = {{4.0, 5.0, 6.0}};
+    // Create 2D points
+    gp::Point<double, 2> p1 = {{100.1, 200.2}};
+    gp::Point<double, 2> p2 = {{400.0, 500.0}};
 
-    Point<double, 3> p3 = p1 + p2;
+    gp::Point<double, 2> p3 = p1 + p2;
     std::cout << "Sum: ";
-    p3.print(); 
+    p3.print();
 
     double dot_result = p1.dot(p2);
-    std::cout << "Dot product: " << dot_result << "\n"; 
+    std::cout << "Dot product: " << dot_result << "\n";
 
     double dist = p1.distance(p2);
-    std::cout << "Distance: " << dist << "\n"; 
+    std::cout << "Distance: " << dist << "\n";
 
-    std::cout << "Scaling p1 by 3.4: \n";
-    p1.scale(3.4);
-    p1.print(); 
+    std::cout << "Scaling p1 by 1.4: \n";
+    p1.scale(1.4);
+    p1.print();
 
-    using Point_2D = Point<double, 2>;
+    using Point_2D = gp::Point<double, 2>;
 
     std::cout << "Collinear test: "
-              << Point_2D::collinear(Point_2D({1, 1}), Point_2D({2, 2}), Point_2D({3, 3}))
+              << Point_2D::collinear(Point_2D({1.0, 1}), Point_2D({2.0, 2.0}), Point_2D({3.0, 3.0}))
               << "\n"; // Expected output: 1 (true)
 
-    // Iterate over coordinates using range-based for loop
     std::cout << "Coordinates of p2: ";
     for (const auto &coord : p2)
     {
         std::cout << coord << " ";
     }
     std::cout << std::endl;
+    gp::Visualizer vis;
 
+    vis.addPoint(p1);
+    vis.addPoint(p2);
+    vis.addPoint(p3);
+    vis.run();
     return 0;
 }
+```
+## Compiling and running
+GeomCPP Requires SFML for visualization as adepencency, so make sure you have it before you run the visualizer. Running visualizer is not mandatory, you can use the ``GeomCPP`` classes as a standalone entity, in that case you wont need the SFML library.
+```bash
+    g++ test.cpp -o geom_cpp -lsfml-graphics -lsfml-window -lsfml-system -std=c++20 && ./geom_cpp
 ```
