@@ -5,7 +5,7 @@
 #include <vector>
 #include <sstream>
 #include <filesystem>
-#include "../Core/Point.hpp" // Include your GeomCPP Point class
+#include "../Core/Point.hpp"
 
 namespace fs = std::filesystem;
 
