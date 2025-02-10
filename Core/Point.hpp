@@ -22,6 +22,7 @@ namespace GeomCPP
         size_t dimensions;
 
     public:
+        std::array<T, Dim> get_coordinates() const {return coordinates;}
         iterator begin() { return coordinates.begin(); }
         iterator end() { return coordinates.end(); }
         const_iterator begin() const { return coordinates.begin(); }
