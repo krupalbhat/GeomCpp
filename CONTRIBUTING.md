@@ -1,4 +1,4 @@
-# Contributing to Appledore
+# Contributing to GeomCPP
 
 GeomCPP is a template-based, modern C++ library for fundamental geometric operations, algorithms, and visualization. It provides efficient tools for working with 2D and 3D points, vectors, and essential geometric computations, now with built-in visualization support using SFML.
 
