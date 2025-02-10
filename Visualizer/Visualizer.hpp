@@ -60,7 +60,6 @@ namespace GeomCPP
                 lines.append(sf::Vertex(sf::Vector2f(x, height), sf::Color(200, 200, 200)));
             }
 
-            // Draw horizontal lines
             for (int y = 0; y < height; y += gridSize)
             {
                 lines.append(sf::Vertex(sf::Vector2f(0, y), sf::Color(200, 200, 200)));
@@ -70,7 +69,6 @@ namespace GeomCPP
             window.draw(lines);
         }
 
-        // Run visualization loop
         void run()
         {
             while (window.isOpen())
@@ -82,26 +80,20 @@ namespace GeomCPP
                         window.close();
                 }
 
-                // Get mouse position
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                 std::stringstream ss;
                 ss << "Mouse: (" << mousePos.x << ", " << mousePos.y << ")";
                 mousePositionText.setString(ss.str());
 
-                // Clear window
                 window.clear(sf::Color::White);
 
-                // Draw grid
                 drawGrid(window);
 
-                // Draw points
                 for (const auto &point : points)
                     window.draw(point);
 
-                // Draw mouse position text
                 window.draw(mousePositionText);
 
-                // Display everything
                 window.display();
             }
         }

@@ -66,5 +66,5 @@ int main()
 ## Compiling and running
 GeomCPP Requires SFML for visualization as adepencency, so make sure you have it before you run the visualizer. Running visualizer is not mandatory, you can use the ``GeomCPP`` classes as a standalone entity, in that case you wont need the SFML library.
 ```bash
-    g++ test.cpp -o geom_cpp -lsfml-graphics -lsfml-window -lsfml-system -std=c++20 && ./geom_cpp
+g++ test.cpp -o geom_cpp -lsfml-graphics -lsfml-window -lsfml-system -std=c++20 && ./geom_cpp
 ```
