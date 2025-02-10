@@ -63,6 +63,8 @@ int main()
     return 0;
 }
 ```
+![Screenshot_20250210_181118](https://github.com/user-attachments/assets/b4d28684-94e1-4eb2-a82e-82db12dc04f0)
+
 ## Compiling and running
 GeomCPP Requires SFML for visualization as adepencency, so make sure you have it before you run the visualizer. Running visualizer is not mandatory, you can use the ``GeomCPP`` classes as a standalone entity, in that case you wont need the SFML library.
 ```bash
