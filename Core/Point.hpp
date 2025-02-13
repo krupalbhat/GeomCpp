@@ -112,7 +112,6 @@ namespace GeomCPP
                                (p2[1] - p1[1]) * (p3[0] - p1[0]);
             return std::abs(determinant) < 1e-9;
         }
-
     };
 
 } // namespace GeomCPP
