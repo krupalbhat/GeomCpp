@@ -5,17 +5,9 @@
 #include <stdexcept>
 #include <concepts>
 #include "./Point_traits.hpp"
-<<<<<<< HEAD
 
 namespace GeomCPP {
 
-=======
-    
-
-namespace GeomCPP {
-
-
->>>>>>> origin/feature/DivisionOperation
 template <typename T, size_t Dim> 
 requires point_numeric<T> 
 class Point {
