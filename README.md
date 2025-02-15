@@ -70,3 +70,28 @@ GeomCPP Requires SFML for visualization as adepencency, so make sure you have it
 ```bash
 g++ test.cpp -o geom_cpp -lsfml-graphics -lsfml-window -lsfml-system -std=c++20 && ./geom_cpp
 ```
+## Running Tests
+``GeomCpp`` uses Google's testing framework **GTest** to run tests.
+
+### Step-by-Step Instructions
+1. **Navigate to the ``tests`` directory:**
+```sh
+    cd tests
+```
+2. **Create a build directory:**
+```sh
+    mkdir build && cd build
+```
+3. **Run CMake to configure the project:**
+```sh
+    cmake ..
+```
+## Running All Tests
+- To build all tests, you can either run:
+```sh
+    make
+```
+or
+```sh
+    make all_tests
+```
