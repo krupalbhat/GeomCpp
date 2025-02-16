@@ -78,6 +78,16 @@ public:
         return std::sqrt(dist); 
     }
 
+    point operator/(const T scalar) const 
+    {
+        if (scalar==0) throw std::runtime_error("Division by zero");
+
+        point result = *this;
+        for (size_t counter=0; counter<Dim; ++counter) result.coordinates[counter]= coordinates[counter]/scalar;
+
+        return result ;
+    }     
+
     template <valid_scalar ScalarType> 
     void scale(ScalarType scalar) { 
         for (auto &coord : coordinates) 
