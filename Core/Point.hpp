@@ -78,6 +78,10 @@ public:
         return std::sqrt(dist); 
     }
 
+    T magnitude() const
+    { 
+        return distance(point{std::array<T, Dim>{}});
+    }
     point operator/(const T scalar) const 
     {
         if (scalar==0) throw std::runtime_error("Division by zero");
