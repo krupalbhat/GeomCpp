@@ -45,4 +45,3 @@ add_custom_target(all_tests
 )
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${TEST_FILES})
-
