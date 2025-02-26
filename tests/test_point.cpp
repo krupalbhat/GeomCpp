@@ -204,3 +204,43 @@ TEST(TestReflection, TestReflection3D) {
   EXPECT_DOUBLE_EQ(result[1], Expected[1]);
   EXPECT_DOUBLE_EQ(result[2], Expected[2]);
 }
+
+TEST(TestApproxEqual, TestPointForEqual2DPositive) {
+  Point2D pt({0.0, 0.0});
+  Point2D pt2({1e-10, 0.0});
+  EXPECT_EQ(pt.approx_equal(pt2), true);
+
+  pt = Point2D({100.0, 500.0});
+  pt2 = Point2D({100.0001, 500.0005});
+  EXPECT_EQ(pt.approx_equal(pt2,1e-2), true);
+}
+
+TEST(TestApproxEqual, TestPointForEqual2DNegative) {
+  Point3D pt({0.0, 0.0});
+  Point3D pt2({1e-3, 1e-4});
+  EXPECT_EQ(pt.approx_equal(pt2), false);
+
+  pt = Point3D({100.0, 500.0});
+  pt2 = Point3D({100.0001, 5000.0});
+  EXPECT_EQ(pt.approx_equal(pt2, 1e-3), false);
+}
+
+TEST(TestApproxEqual, TestPointForEqual3DPositive) {
+  Point3D pt({0.0, 0.0, 0.0});
+  Point3D pt2({1e-10, 0.0, 1e-10});
+  EXPECT_EQ(pt.approx_equal(pt2), true);
+
+  pt = Point3D({100.0, 500.0, 700.0});
+  pt2 = Point3D({100.0001, 500.0005, 700.0002});
+  EXPECT_EQ(pt.approx_equal(pt2, 1e-2), true);
+}
+
+TEST(TestApproxEqual, TestPointForEqual3DNegative) {
+  Point3D pt({0.0, 0.0, 0.0});
+  Point3D pt2({1e-7, 0.0, 0.5});
+  EXPECT_EQ(pt.approx_equal(pt2), false);
+
+  pt = Point3D({100.0, 500.0, 700});
+  pt2 = Point3D({100.0001, 500.0005, 775});
+  EXPECT_EQ(pt.approx_equal(pt2, 1e-3), false);
+}
