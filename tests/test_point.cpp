@@ -243,4 +243,48 @@ TEST(TestApproxEqual, TestPointForEqual3DNegative) {
   pt = Point3D({100.0, 500.0, 700});
   pt2 = Point3D({100.0001, 500.0005, 775});
   EXPECT_EQ(pt.approx_equal(pt2, 1e-3), false);
+=======
+TEST(PointTest, ProjectionOntoLine2D) {
+  std::array<double, 2> p_coords = {3.0, 4.0};
+  std::array<double, 2> line_p1_coords = {1.0, 1.0};
+  std::array<double, 2> line_p2_coords = {5.0, 5.0};
+
+  Point2D p(p_coords);
+  Point2D line_p1(line_p1_coords);
+  Point2D line_p2(line_p2_coords);
+
+  Point2D projected = p.project_onto_line(line_p1, line_p2);
+
+  std::array<double, 2> expected_coords = {3.5, 3.5}; // Expected projection
+  EXPECT_NEAR(projected[0], expected_coords[0], 1e-9);
+  EXPECT_NEAR(projected[1], expected_coords[1], 1e-9);
+}
+
+TEST(PointTest, ProjectionOntoLine3D) {
+  std::array<double, 3> p_coords = {2.0, 3.0, 4.0};
+  std::array<double, 3> line_p1_coords = {0.0, 0.0, 0.0};
+  std::array<double, 3> line_p2_coords = {1.0, 1.0, 1.0};
+
+  Point3D p(p_coords);
+  Point3D line_p1(line_p1_coords);
+  Point3D line_p2(line_p2_coords);
+
+  Point3D projected = p.project_onto_line(line_p1, line_p2);
+
+  std::array<double, 3> expected_coords = {3.0, 3.0, 3.0}; // Expected projection
+  EXPECT_NEAR(projected[0], expected_coords[0], 1e-9);
+  EXPECT_NEAR(projected[1], expected_coords[1], 1e-9);
+  EXPECT_NEAR(projected[2], expected_coords[2], 1e-9);
+}
+
+TEST(PointTest, ProjectionOntoDegenerateLine) {
+  std::array<double, 2> p_coords = {3.0, 4.0};
+  std::array<double, 2> line_p1_coords = {2.0, 2.0};
+  std::array<double, 2> line_p2_coords = {2.0, 2.0}; // Degenerate case (same points)
+
+  Point2D p(p_coords);
+  Point2D line_p1(line_p1_coords);
+  Point2D line_p2(line_p2_coords);
+
+  EXPECT_THROW(p.project_onto_line(line_p1, line_p2), std::runtime_error);
 }
