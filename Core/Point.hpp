@@ -144,6 +144,23 @@ public:
     return result;
   }
 
+//Added
+  Point<T, Dim> project_onto_line(const Point<T, Dim>& line_point1, const Point<T, Dim>& line_point2) const {
+    Point<T, Dim> AB = line_point2 - line_point1;
+    Point<T, Dim> AP = *this - line_point1;
+
+    T dot_AP_AB = AP.dot(AB);
+    T dot_AB_AB = AB.dot(AB);
+
+    if (dot_AB_AB == 0) {
+        throw std::runtime_error("Line points must be distinct");
+    }
+
+    T factor = dot_AP_AB / dot_AB_AB;
+    return line_point1 + AB * factor;
+  }
+
+
   void print() const {
     std::cout << "(";
     for (size_t i = 0; i < Dim; ++i) {
